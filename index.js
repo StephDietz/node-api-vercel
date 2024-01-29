@@ -1,5 +1,8 @@
+require('dotenv').config();
+
 const express = require('express');
 const app = express();
+const { sql } = require('@vercel/postgres');
 
 const bodyParser = require('body-parser');
 
@@ -20,24 +23,33 @@ app.get('/post_form', function (req, res) {
 	res.sendFile(__dirname + '/' + 'post_form.htm');
 });
 
-app.post('/process_post', urlencodedParser, function (req, res) {
-	// Prepare output in JSON format
-	response = {
-		first_name: req.body.first_name,
-		last_name: req.body.last_name
-	};
-	console.log(response);
-	res.end(JSON.stringify(response));
+app.get('/user_upload_form', function (req, res) {
+	res.sendFile(__dirname + '/' + 'user_upload_form.htm');
 });
 
-app.get('/process_get', function (req, res) {
-	// Prepare output in JSON format
-	response = {
-		first_name: req.query.first_name,
-		last_name: req.query.last_name
-	};
-	console.log(response);
-	res.end(JSON.stringify(response));
+app.post('/addUser', urlencodedParser, async (req, res) => {
+	try {
+		await sql`INSERT INTO Users (Id, Name, Email) VALUES (${req.body.user_id}, ${req.body.name}, ${req.body.email});`;
+		res.status(200).send('<h1>User added successfully</h1>');
+	} catch (error) {
+		console.error(error);
+		res.status(500).send('Error adding user');
+	}
+});
+
+app.get('/getUsers', async (req, res) => {
+	try {
+		const users = await sql`SELECT * FROM Users;`;
+		console.log(users.rows);
+		if (users) {
+			res.status(200).send(`<h1>Users</h1><pre>${JSON.stringify(users.rows, null, 2)}</pre>`);
+		} else {
+			res.status(404).send('Users not found');
+		}
+	} catch (error) {
+		console.error(error);
+		res.status(500).send('Error retrieving user');
+	}
 });
 
 const server = app.listen(8081, function () {
