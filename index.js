@@ -1,11 +1,17 @@
-var express = require('express');
-var app = express();
-var bodyParser = require('body-parser');
+const express = require('express');
+const app = express();
+
+const bodyParser = require('body-parser');
 
 // Create application/x-www-form-urlencoded parser
-var urlencodedParser = bodyParser.urlencoded({ extended: false });
+const urlencodedParser = bodyParser.urlencoded({ extended: false });
 
 app.use(express.static('public'));
+
+app.get('/', function (req, res) {
+	res.sendFile(__dirname + '/' + 'home.htm');
+});
+
 app.get('/get_form', function (req, res) {
 	res.sendFile(__dirname + '/' + 'get_form.htm');
 });
@@ -34,9 +40,9 @@ app.get('/process_get', function (req, res) {
 	res.end(JSON.stringify(response));
 });
 
-var server = app.listen(8081, function () {
-	var host = server.address().address;
-	var port = server.address().port;
+const server = app.listen(8081, function () {
+	const host = server.address().address;
+	const port = server.address().port;
 
 	console.log('Example app listening at http://%s:%s', host, port);
 });
