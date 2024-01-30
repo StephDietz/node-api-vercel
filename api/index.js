@@ -5,6 +5,7 @@ const app = express();
 const { sql } = require('@vercel/postgres');
 
 const bodyParser = require('body-parser');
+const path = require('path');
 
 // Create application/x-www-form-urlencoded parser
 const urlencodedParser = bodyParser.urlencoded({ extended: false });
@@ -12,15 +13,15 @@ const urlencodedParser = bodyParser.urlencoded({ extended: false });
 app.use(express.static('public'));
 
 app.get('/', function (req, res) {
-	res.sendFile(__dirname + '/' + 'home.htm');
+	res.sendFile(path.join(__dirname, '..', 'components', 'home.htm'));
 });
 
 app.get('/about', function (req, res) {
-	res.sendFile(__dirname + '/' + 'about.htm');
+	res.sendFile(path.join(__dirname, '..', 'components', 'about.htm'));
 });
 
 app.get('/uploadUser', function (req, res) {
-	res.sendFile(__dirname + '/' + 'user_upload_form.htm');
+	res.sendFile(path.join(__dirname, '..', 'components', 'user_upload_form.htm'));
 });
 
 app.post('/uploadSuccessful', urlencodedParser, async (req, res) => {
