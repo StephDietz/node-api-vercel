@@ -37,7 +37,6 @@ app.post('/uploadSuccessful', urlencodedParser, async (req, res) => {
 app.get('/allUsers', async (req, res) => {
 	try {
 		const users = await sql`SELECT * FROM Users;`;
-		console.log(users.rows);
 		if (users && users.rows.length > 0) {
 			let tableContent = users.rows
 				.map(
@@ -108,9 +107,6 @@ app.get('/allUsers', async (req, res) => {
 	}
 });
 
-const server = app.listen(8081, function () {
-	const host = server.address().address;
-	const port = server.address().port;
+app.listen(3001, () => console.log('Server ready on port 3000.'));
 
-	console.log('Example app listening at http://%s:%s', host, port);
-});
+module.exports = app;
