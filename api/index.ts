@@ -42,10 +42,10 @@ app.get('/allUsers', async (req, res) => {
 				.map(
 					(user) =>
 						`<tr>
-                    <td>${user.id}</td>
-                    <td>${user.name}</td>
-                    <td>${user.email}</td>
-                </tr>`
+                        <td>${user.id}</td>
+                        <td>${user.name}</td>
+                        <td>${user.email}</td>
+                    </tr>`
 				)
 				.join('');
 
@@ -60,7 +60,7 @@ app.get('/allUsers', async (req, res) => {
                             table {
                                 width: 100%;
                                 border-collapse: collapse;
-																margin-bottom: 15px;
+                                margin-bottom: 15px;
                             }
                             th, td {
                                 border: 1px solid #ddd;
@@ -70,11 +70,11 @@ app.get('/allUsers', async (req, res) => {
                             th {
                                 background-color: #f2f2f2;
                             }
-														a {
-															text-decoration: none;
-															color: #0a16f7;
-															margin: 15px;
-														}
+                            a {
+                                text-decoration: none;
+                                color: #0a16f7;
+                                margin: 15px;
+                            }
                         </style>
                     </head>
                     <body>
@@ -91,10 +91,10 @@ app.get('/allUsers', async (req, res) => {
                                 ${tableContent}
                             </tbody>
                         </table>
-												<div>
-													<a href="/">Home</a>
-													<a href="/uploadUser">Add User</a>
-												</div>
+                        <div>
+                            <a href="/">Home</a>
+                            <a href="/uploadUser">Add User</a>
+                        </div>
                     </body>
                 </html>
             `);
